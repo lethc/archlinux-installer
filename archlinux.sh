@@ -5,7 +5,7 @@ hostname="archlinux"
 drive="/dev/nvme0n1"  # Change this to your drive, e.g., /dev/nvme0n1
 grub="1GiB"
 swap_size="5GiB"    # Swap partition size
-root_size="55GiB"   # Root partition size
+root_size="65GiB"   # Root partition size
 home_size="100%"  # Home partition size (remaining space)
 
 #Update System clock
@@ -23,18 +23,18 @@ parted $drive mkpart primary ext4 $root_size $home_size # For Home
 parted $drive set 1 esp on
 
 # Format the partitions
-mkfs.fat -F32 ${drive}1
-mkswap ${drive}2
-mkfs.ext4 ${drive}3
-mkfs.ext4 ${drive}4
+mkfs.fat -F32 ${drive}p1
+mkswap ${drive}p2
+mkfs.ext4 ${drive}p3
+mkfs.ext4 ${drive}p4
 
 # Mount the partitions
 mkdir -p /mnt/boot/efi # For GRUB UEFI
-mount ${drive}1 /mnt/boot/efi/
-swapon ${drive}2
-mount ${drive}3 /mnt # For Root
+mount ${drive}p1 /mnt/boot/efi/
+swapon ${drive}p2
+mount ${drive}p3 /mnt # For Root
 mkdir /mnt/home
-mount ${drive}4 /mnt/home # For Home
+mount ${drive}p4 /mnt/home # For Home
 
 # Install Arch Linux base system
 pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware amd-ucode nano vim git sudo networkmanager dhcpcd pulseaudio bluez wpa_supplicant 
