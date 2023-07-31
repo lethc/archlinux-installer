@@ -3,8 +3,9 @@
 # Variables (Please modify according to your needs)
 hostname="archlinux"
 drive="/dev/nvme0n1"  # Change this to your drive, e.g., /dev/nvme0n1
-swap_size="4G"    # Swap partition size
-root_size="50G"   # Root partition size
+grub="1GiB"
+swap_size="4GiB"    # Swap partition size
+root_size="50GiB"   # Root partition size
 home_size="100%"  # Home partition size (remaining space)
 
 # Ensure we have the latest package list
@@ -12,9 +13,10 @@ pacman -Sy
 
 # Partition the drive using parted
 parted $drive mklabel gpt
-parted $drive mkpart primary ext4 1MiB $swap_size
-parted $drive mkpart primary ext4 $swap_size $root_size
-parted $drive mkpart primary ext4 $root_size $home_size
+parted $drive mkpart primary fat32 1MiB $grub  # For GRUB UEFI
+parted $drive mkpart primary linux-swap $grub $swap_size # For Swap
+parted $drive mkpart primary ext4 $swap_size $root_size # For Root
+parted $drive mkpart primary ext4 $root_size $home_size # For Home
 parted $drive set 1 esp on
 
 # Format the partitions
