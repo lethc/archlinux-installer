@@ -2,10 +2,11 @@
 
 # Variables (Please modify according to your needs)
 hostname="archlinux"
+user="lummyn"
 drive="/dev/nvme0n1"  # Change this to your drive, e.g., /dev/nvme0n1
 grub="1GiB"
-swap_size="5GiB"    # Swap partition size
-root_size="65GiB"   # Root partition size
+swap_size="6GiB"    # Swap partition size
+root_size="66GiB"   # Root partition size
 home_size="100%"  # Home partition size (remaining space)
 
 #Update System clock
@@ -63,6 +64,13 @@ echo "127.0.1.1 ${hostname}.localdomain localhost" >> /mnt/etc/hosts
 # Set the root password
 echo "Set root password:"
 arch-chroot /mnt passwd
+
+# Create a new user
+echo "Create a new user:"
+arch-chroot /mnt useradd -m $user
+echo "Set user password:"
+arch-chroot /mnt passwd $user
+arch-chroot /mnt usermod -aG wheel,storage,power $user
 
 # Install the bootloader (assuming you're using GRUB)
 arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools
