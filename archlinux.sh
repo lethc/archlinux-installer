@@ -82,7 +82,7 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install additional packages (you can customize this according to your needs)
 echo "install packages"
-arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm sddm plasma plasma-desktop plasma-wayland-session firefox dolphin git neovim
+arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm sddm pipewire-alsa pipewire-jack pipewire-pulse alsa-utils plasma plasma-desktop plasma-wayland-session firefox dolphin git neovim
 
 # Enable essential services (you can customize this according to your needs)
 echo "Enable services"
