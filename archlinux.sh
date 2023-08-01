@@ -6,7 +6,7 @@ user="lummyn"
 drive="/dev/nvme0n1"  # Change this to your drive, e.g., /dev/nvme0n1
 grub="1GiB"
 swap_size="6GiB"    # Swap partition size
-root_size="66GiB"   # Root partition size
+root_size="86GiB"   # Root partition size
 home_size="100%"  # Home partition size (remaining space)
 
 #Update System clock
@@ -81,12 +81,15 @@ arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --re
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install additional packages (you can customize this according to your needs)
-#arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm sddm plasma plasma-desktop plasma-wayland-session firefox dolphin git neovim
+echo "install packages"
+arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm sddm plasma plasma-desktop plasma-wayland-session firefox dolphin git neovim
 
 # Enable essential services (you can customize this according to your needs)
-#arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service
+echo "Enable services"
+arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service
 
 # Finish and unmount
+echo "umount"
 umount -R /mnt
 
 echo "Installation complete. You can now reboot into your new Arch Linux system."
