@@ -2,7 +2,7 @@
 
 # Variables (Please modify according to your needs)
 hostname="archlinux"
-user="lummyn"
+user="user"
 drive="/dev/nvme0n1"  # Change this to your drive, e.g., /dev/nvme0n1
 grub="1GiB"
 swap_size="6GiB"    # Swap partition size
@@ -99,9 +99,9 @@ arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --re
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install additional packages (you can customize this according to your needs)
-echo "##################################################"
+echo "######################################################"
 echo "## Installing display server, DE and audio services ##"
-echo "##################################################"
+echo "######################################################"
 arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm plasma plasma-desktop plasma-wayland-session
 
 # Install developer apps
@@ -116,7 +116,7 @@ arch-chroot /mnt curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 echo "######################################"
 echo "##   Installing other applications  ##"
 echo "######################################"
-arch-chroot /mnt pacman -S zsh firefox dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilusm telegram-desktop qt5ct
+arch-chroot /mnt pacman -S zsh firefox dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilusm telegram-desktop qt5ct texlive-most zathura zathura-pdf-mupdf
 arch-chroot /mnt pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-jetbrains-mono-nerd
 arch-chroot /mnt pacman -S zsh-syntax-highlighting zsh-autosuggestions 
 
@@ -128,8 +128,8 @@ arch-chroot /mnt makepkg -si
 echo "######################################"
 echo "##   Installing  AUR  applications  ##"
 echo "######################################"
-arch-chroot /mnt yay -S ranger-git noto-fonts-emoji-apple lsix nodejs-readability-cli selectdefaultapplication-git apple-fonts nwg-look
-arch-chroot /mnt yay -S jdk-lts jdk-lts-doc google-java-format-git python-rpcq rar
+arch-chroot /mnt yay -S ranger-git noto-fonts-emoji-apple lsix nodejs-readability-cli selectdefaultapplication-git apple-fonts nwg-look biber
+arch-chroot /mnt yay -S jdk-lts jdk-lts-doc google-java-format-git python-rpcq rar rofi-lbonn-wayland-git rofi-emoji megacmd
 
 # Zsh dependencies
 arch-chroot /mnt pacman -S zsh-syntax-highlighting zsh-autosuggestions 
