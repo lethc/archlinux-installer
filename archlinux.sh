@@ -117,7 +117,7 @@ arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm pipewire-alsa pipewire-j
 echo "######################################"
 echo "##   Installing other applications  ##"
 echo "######################################"
-arch-chroot /mnt pacman -S zsh firefox dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilus telegram-desktop qt5ct zathura zathura-pdf-mupdf
+arch-chroot /mnt pacman -S zsh dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilus telegram-desktop qt5ct zathura zathura-pdf-mupdf firefox
 arch-chroot /mnt pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-jetbrains-mono-nerd
 #arch-chroot /mnt pacman -S zsh-syntax-highlighting zsh-autosuggestions 
 
