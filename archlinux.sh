@@ -30,8 +30,7 @@ mkfs.ext4 ${drive}p3
 mkfs.ext4 ${drive}p4
 
 # Mount the partitions
-mkdir -p /mnt/boot/efi # For GRUB UEFI
-mount ${drive}p1 /mnt/boot/efi/
+
 swapon ${drive}p2
 mount ${drive}p3 /mnt # For Root
 mkdir /mnt/home
@@ -75,15 +74,17 @@ arch-chroot /mnt usermod -aG wheel,storage,power $user
 arch-chroot /mnt sed -i 's/# %wheel ALL=(ALL:ALL) ALL$/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers 
 
 # Install the bootloader (assuming you're using GRUB)
+mkdir -p /mnt/boot/efi # For GRUB UEFI
+mount ${drive}p1 /mnt/boot/efi/
 arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools os-prober
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install additional packages (you can customize this according to your needs)
-arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm sddm plasma plasma-desktop plasma-wayland-session firefox dolphin git neovim
+#arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm sddm plasma plasma-desktop plasma-wayland-session firefox dolphin git neovim
 
 # Enable essential services (you can customize this according to your needs)
-arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service
+#arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service
 
 # Finish and unmount
 umount -R /mnt
