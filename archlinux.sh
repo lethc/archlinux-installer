@@ -44,7 +44,7 @@ mount ${drive}p4 /mnt/home # For Home
 echo "##########################################"
 echo "##  Installing Arch Linux base system   ##"
 echo "##########################################"
-pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware amd-ucode nano vim git sudo networkmanager dhcpcd pulseaudio bluez wpa_supplicant 
+pacstrap /mnt base base-devel linux-lts linux-lts-headers linux-firmware amd-ucode nano vim git sudo networkmanager dhcpcd bluez wpa_supplicant 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
