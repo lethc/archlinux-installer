@@ -70,18 +70,20 @@ echo "Create a new user:"
 arch-chroot /mnt useradd -m $user
 echo "Set user password:"
 arch-chroot /mnt passwd $user
+echo 'Allowing members of group "wheel" to use "sudo"...'
 arch-chroot /mnt usermod -aG wheel,storage,power $user
+arch-chroot /mnt sed -i 's/# %wheel ALL=(ALL:ALL) ALL$/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers 
 
 # Install the bootloader (assuming you're using GRUB)
-arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools
+arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools os-prober
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 # Install additional packages (you can customize this according to your needs)
-# arch-chroot /mnt pacman -S <package1> <package2> ...
+arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm sddm plasma plasma-desktop plasma-wayland-session firefox dolphin git neovim
 
 # Enable essential services (you can customize this according to your needs)
-# arch-chroot /mnt systemctl enable <service1> <service2> ...
+arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service
 
 # Finish and unmount
 umount -R /mnt
