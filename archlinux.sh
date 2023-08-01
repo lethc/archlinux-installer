@@ -105,51 +105,51 @@ echo "######################################################"
 arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm plasma plasma-desktop plasma-wayland-session
 
 # Install developer apps
-echo "###############################"
-echo "## Installing Developer apps ##"
-echo "###############################"
+#echo "###############################"
+#echo "## Installing Developer apps ##"
+#echo "###############################"
 
-arch-chroot /mnt pacman -S nodejs npm python-pip python-pipx go pynvim python-black prettier stylua ripgrep fd gzip  wl-clipboard cliphist unzip deno composer yarn xampp ruby rustup
-arch-chroot /mnt curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+#arch-chroot /mnt pacman -S nodejs npm python-pip python-pipx go pynvim python-black prettier stylua ripgrep fd gzip  wl-clipboard cliphist unzip deno composer yarn xampp ruby rustup
+#arch-chroot /mnt curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 # Install desktop environment
 echo "######################################"
 echo "##   Installing other applications  ##"
 echo "######################################"
-arch-chroot /mnt pacman -S zsh firefox dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilusm telegram-desktop qt5ct texlive-most zathura zathura-pdf-mupdf
+arch-chroot /mnt pacman -S zsh firefox dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilus telegram-desktop qt5ct zathura zathura-pdf-mupdf
 arch-chroot /mnt pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-jetbrains-mono-nerd
-arch-chroot /mnt pacman -S zsh-syntax-highlighting zsh-autosuggestions 
+#arch-chroot /mnt pacman -S zsh-syntax-highlighting zsh-autosuggestions 
 
 # Install yay to Aur
-arch-chroot /mnt git clone https://aur.archlinux.org/yay.git
-arch-chroot /mnt cd yay
-arch-chroot /mnt makepkg -si
+#arch-chroot /mnt git clone https://aur.archlinux.org/yay.git
+#arch-chroot /mnt cd yay
+#arch-chroot /mnt makepkg -si
 
-echo "######################################"
-echo "##   Installing  AUR  applications  ##"
-echo "######################################"
-arch-chroot /mnt yay -S ranger-git noto-fonts-emoji-apple lsix nodejs-readability-cli selectdefaultapplication-git apple-fonts nwg-look biber
-arch-chroot /mnt yay -S jdk-lts jdk-lts-doc google-java-format-git python-rpcq rar rofi-lbonn-wayland-git rofi-emoji megacmd
+#echo "######################################"
+#echo "##   Installing  AUR  applications  ##"
+#echo "######################################"
+#arch-chroot /mnt yay -S ranger-git noto-fonts-emoji-apple lsix nodejs-readability-cli selectdefaultapplication-git apple-fonts nwg-look biber
+#arch-chroot /mnt yay -S jdk-lts jdk-lts-doc google-java-format-git python-rpcq rar rofi-lbonn-wayland-git rofi-emoji megacmd
 
 # Zsh dependencies
-arch-chroot /mnt pacman -S zsh-syntax-highlighting zsh-autosuggestions 
-arch-chroot /mnt pacman -S lsd bat
-arch-chroot /mnt yay -S zsh-autocomplete-git zsh-sudo-git zsh-vi-mode
+#arch-chroot /mnt pacman -S zsh-syntax-highlighting zsh-autosuggestions 
+#arch-chroot /mnt pacman -S lsd bat
+#arch-chroot /mnt yay -S zsh-autocomplete-git zsh-sudo-git zsh-vi-mode
 
-arch-chroot /mnt pacman -S qt5-graphicaleffects qt5-svg qt5-quickcontrols2 nsxiv
-arch-chroot /mnt yay -S sddm-theme-corners-git
-arch-chroot /mnt mkdir /etc/sddm.conf.d/
-arch-chroot /mnt touch /etc/sddm.conf.d/config 
-arch-chroot /mnt echo "[Theme]" > /etc/sddm.conf.d/config 
-arch-chroot /mnt echo "Current=corners" >> /etc/sddm.conf.d/config 
+#arch-chroot /mnt pacman -S qt5-graphicaleffects qt5-svg qt5-quickcontrols2 nsxiv
+#arch-chroot /mnt yay -S sddm-theme-corners-git
+#arch-chroot /mnt mkdir /etc/sddm.conf.d/
+#arch-chroot /mnt touch /etc/sddm.conf.d/config 
+#arch-chroot /mnt echo "[Theme]" > /etc/sddm.conf.d/config 
+#arch-chroot /mnt echo "Current=corners" >> /etc/sddm.conf.d/config 
 
 # Install Hyprland and nvim config dependencies
-echo "##########################################"
-echo "##### Installing neovim dependencies #####"
-echo "##########################################"
-arch-chroot /mnt pacman -S kitty hyprland xdg-desktop-portal-hyprland wofi dunst jq swayidle bc pamixer papirus-icon-theme playerctl grim grimblast slurp wl-clipboard socat swappy nm-connection-editor dictd blueberry acpi swaylock
-arch-chroot /mnt pacman -S xdg-desktop-portal-gtk
-arch-chroot /mnt yay -S  eww-wayland swaylock-effects-git sway-audio-idle-inhibit-git light-git cava cliphist hyprpicker-git wl-clip-persist-git swww
+#echo "##########################################"
+#echo "##### Installing neovim dependencies #####"
+#echo "##########################################"
+#arch-chroot /mnt pacman -S kitty hyprland xdg-desktop-portal-hyprland wofi dunst jq swayidle bc pamixer papirus-icon-theme playerctl grim grimblast slurp wl-clipboard socat swappy nm-connection-editor dictd blueberry acpi swaylock
+#arch-chroot /mnt pacman -S xdg-desktop-portal-gtk
+#arch-chroot /mnt yay -S  eww-wayland swaylock-effects-git sway-audio-idle-inhibit-git light-git cava cliphist hyprpicker-git wl-clip-persist-git swww
 
 # Enable essential services (you can customize this according to your needs)
 echo "###############################"
@@ -157,11 +157,11 @@ echo "#####   Enable Services   #####"
 echo "###############################"
 
 arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service
-arch-chroot /mnt echo "export QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/profile
+#arch-chroot /mnt echo "export #QT_QPA_PLATFORMTHEME=qt5ct" >> /etc/profile
 
 # Change shell
-arch-chroot /mnt usermod —s /usr/bin/zsh root
-arch-chroot /mnt usermod —s /usr/bin/zsh $user
+#arch-chroot /mnt usermod —s /usr/bin/zsh root
+#arch-chroot /mnt usermod —s /usr/bin/zsh $user
 
 # Finish and unmount
 echo "###############################"
