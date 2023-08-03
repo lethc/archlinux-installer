@@ -117,7 +117,7 @@ echo "###############################"
 echo "#####   Enable Services   #####"
 echo "###############################"
 
-arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service
+arch-chroot /mnt systemctl enable dhcpcd.service NetworkManager.service sddm.service cronie.service
 
 # Finish and unmount
 echo "###############################"
