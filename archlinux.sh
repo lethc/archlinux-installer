@@ -109,8 +109,8 @@ arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm pipewire-alsa pipewire-j
 echo "######################################"
 echo "##   Installing other applications  ##"
 echo "######################################"
-arch-chroot /mnt pacman -S zsh dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilus telegram-desktop qt5ct zathura zathura-pdf-mupdf firefox gnome-sound-recorder gnome-clocks pavucontrol qalculate-gtk imv fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-mozc fcitx5-hangul fcitx5-chinese-addons gnome-keyring
-arch-chroot /mnt pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-jetbrains-mono-nerd
+arch-chroot /mnt pacman -S zsh dolphin git neovim konsole qutebrowser discover foot man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum cronie nautilus telegram-desktop qt5ct zathura zathura-pdf-mupdf firefox gnome-sound-recorder gnome-clocks pavucontrol qalculate-gtk imv fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-mozc fcitx5-hangul fcitx5-chinese-addons gnome-keyring snapshot loupe brightnessctl
+arch-chroot /mnt pacman -S noto-fonts-cjk noto-fonts-emoji noto-fonts ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd
 
 # Enable essential services (you can customize this according to your needs)
 echo "###############################"
