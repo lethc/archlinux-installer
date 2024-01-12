@@ -20,25 +20,25 @@ echo "##########################################"
 echo "##        Partitioning the drive       ##"
 echo "##########################################"
 
-parted $drive mklabel gpt
-parted $drive mkpart primary fat32 1MiB $grub  # For GRUB UEFI
-parted $drive mkpart primary linux-swap $grub $swap_size # For Swap
-parted $drive mkpart primary ext4 $swap_size $root_size # For Root
-parted $drive mkpart primary ext4 $root_size $home_size # For Home
-parted $drive set 1 esp on
+parted "$drive" mklabel gpt
+parted "$drive" mkpart primary fat32 1MiB "$grub"  # For GRUB UEFI
+parted "$drive" mkpart primary linux-swap "$grub" "$swap_size" # For Swap
+parted "$drive" mkpart primary ext4 "$swap_size" "$root_size" # For Root
+parted "$drive" mkpart primary ext4 "$root_size" "$home_size" # For Home
+parted "$drive" set 1 esp on
 
 # Format the partitions
-mkfs.fat -F32 ${drive}p1
-mkswap ${drive}p2
-mkfs.ext4 ${drive}p3
-mkfs.ext4 ${drive}p4
+mkfs.fat -F32 "${drive}p1"
+mkswap "${drive}p2"
+mkfs.ext4 "${drive}p3"
+mkfs.ext4 "${drive}p4"
 
 # Mount the partitions
 
-swapon ${drive}p2
-mount ${drive}p3 /mnt # For Root
+swapon "${drive}p2"
+mount "${drive}p3" /mnt # For Root
 mkdir /mnt/home
-mount ${drive}p4 /mnt/home # For Home
+mount "${drive}p4" /mnt/home # For Home
 
 # Install Arch Linux base system
 echo "##########################################"
@@ -61,7 +61,7 @@ arch-chroot /mnt locale-gen
 echo "LANG=en_GB.UTF-8" > /mnt/etc/locale.conf
 
 # Set the hostname (change 'archlinux' to your preferred hostname)
-echo $hostname > /mnt/etc/hostname
+echo "$hostname" > /mnt/etc/hostname
 
 # Set the hosts file
 echo "127.0.0.1 localhost" >> /mnt/etc/hosts
@@ -81,11 +81,11 @@ echo "##       Creating user and password             ##"
 echo "##################################################"
 
 echo "Create a new user:"
-arch-chroot /mnt useradd -m $user
+arch-chroot /mnt useradd -m "$user"
 echo "Set user password:"
-arch-chroot /mnt passwd $user
+arch-chroot /mnt passwd "$user"
 echo 'Allowing members of group "wheel" to use "sudo"...'
-arch-chroot /mnt usermod -aG wheel,storage,power $user
+arch-chroot /mnt usermod -aG wheel,storage,power "$user"
 arch-chroot /mnt sed -i 's/# %wheel ALL=(ALL:ALL) ALL$/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers 
 
 # Install the bootloader (assuming you're using GRUB)
@@ -94,7 +94,7 @@ echo "##        Installing GRUB bootloader            ##"
 echo "##################################################"
 
 mkdir -p /mnt/boot/efi # For GRUB UEFI
-mount ${drive}p1 /mnt/boot/efi/
+mount "${drive}p1" /mnt/boot/efi/
 arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools os-prober
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
