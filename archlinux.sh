@@ -3,7 +3,7 @@
 # Variables (Please modify according to your needs)
 hostname="archlinux"
 user="user"
-drive="/dev/nvme0n1"  # Change this to your drive, e.g., /dev/nvme0n1
+drive="nvme0n1"  # Change this to your drive (e.g., sda/nvme0n1)
 grub="1GiB"
 swap_size="6GiB"    # Swap partition size
 root_size="86GiB"   # Root partition size
@@ -20,25 +20,40 @@ echo "##########################################"
 echo "##        Partitioning the drive       ##"
 echo "##########################################"
 
-parted "$drive" mklabel gpt
-parted "$drive" mkpart primary fat32 1MiB "$grub"  # For GRUB UEFI
-parted "$drive" mkpart primary linux-swap "$grub" "$swap_size" # For Swap
-parted "$drive" mkpart primary ext4 "$swap_size" "$root_size" # For Root
-parted "$drive" mkpart primary ext4 "$root_size" "$home_size" # For Home
-parted "$drive" set 1 esp on
+# Handle the difference between partitioning naming schemes (sda1/nvme0n1p1)
+if [[ "$drive" == nvme* ]]; then
+  disk_path="/dev/$drive"
+  efi_partition_path="/dev/${drive}p1"
+  swap_partition_path="/dev/${drive}p2"
+  root_partition_path="/dev/${drive}p3"
+  home_partition_path="/dev/${drive}p4"
+else
+  disk_path="/dev/$drive"
+  efi_partition_path="/dev/${drive}1"
+  swap_partition_path="/dev/${drive}2"
+  root_partition_path="/dev/${drive}3"
+  home_partition_path="/dev/${drive}4"
+fi
+
+parted "$disk_path" mklabel gpt
+parted "$disk_path" mkpart primary fat32 1MiB "$grub"  # For GRUB UEFI
+parted "$disk_path" mkpart primary linux-swap "$grub" "$swap_size" # For Swap
+parted "$disk_path" mkpart primary ext4 "$swap_size" "$root_size" # For Root
+parted "$disk_path" mkpart primary ext4 "$root_size" "$home_size" # For Home
+parted "$dish_path" set 1 esp on
 
 # Format the partitions
-mkfs.fat -F32 "${drive}p1"
-mkswap "${drive}p2"
-mkfs.ext4 "${drive}p3"
-mkfs.ext4 "${drive}p4"
+mkfs.fat -F32 "$efi_partition_path"
+mkswap "$swap_partition_path"
+mkfs.ext4 "$root_partition_path"
+mkfs.ext4 "$home_partition_path"
 
 # Mount the partitions
 
-swapon "${drive}p2"
-mount "${drive}p3" /mnt # For Root
+swapon "$swap_partition_path"
+mount "$root_partition_path" /mnt # For Root
 mkdir /mnt/home
-mount "${drive}p4" /mnt/home # For Home
+mount "$home_partition_path" /mnt/home # For Home
 
 # Install Arch Linux base system
 echo "##########################################"
@@ -94,7 +109,7 @@ echo "##        Installing GRUB bootloader            ##"
 echo "##################################################"
 
 mkdir -p /mnt/boot/efi # For GRUB UEFI
-mount "${drive}p1" /mnt/boot/efi/
+mount "$efi_partition_path" /mnt/boot/efi/
 arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools os-prober
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
