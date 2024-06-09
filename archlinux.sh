@@ -35,12 +35,31 @@ else
   home_partition_path="/dev/${drive}4"
 fi
 
-parted "$disk_path" mklabel gpt
-parted "$disk_path" mkpart primary fat32 1MiB "$grub"  # For GRUB UEFI
-parted "$disk_path" mkpart primary linux-swap "$grub" "$swap_size" # For Swap
-parted "$disk_path" mkpart primary ext4 "$swap_size" "$root_size" # For Root
-parted "$disk_path" mkpart primary ext4 "$root_size" "$home_size" # For Home
-parted "$dish_path" set 1 esp on
+# parted "$disk_path" mklabel gpt
+# parted "$disk_path" mkpart primary fat32 1MiB "$grub"  # For GRUB UEFI
+# parted "$disk_path" mkpart primary linux-swap "$grub" "$swap_size" # For Swap
+# parted "$disk_path" mkpart primary ext4 "$swap_size" "$root_size" # For Root
+# parted "$disk_path" mkpart primary ext4 "$root_size" "$home_size" # For Home
+# parted "$dish_path" set 1 esp on
+
+# Create a GPT partition table
+sgdisk -o "$disk_path"
+
+# Create EFI partition
+sgdisk -n 1:1MiB:+${grub} -t 1:EF00 "$disk_path"
+
+# Create swap partition
+sgdisk -n 2:0:+${swap_size} -t 2:8200 "$disk_path"
+
+# Create root partition
+sgdisk -n 3:0:+${root_size} -t 3:8300 "$disk_path"
+
+# Create home partition (remaining space)
+sgdisk -n 4:0:0 -t 4:8300 "$disk_path"
+
+# Inform the kernel of the partition changes
+partprobe "$disk_path"
+
 
 # Format the partitions
 mkfs.fat -F32 "$efi_partition_path"
