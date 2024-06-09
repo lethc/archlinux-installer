@@ -54,6 +54,8 @@ swapon "$swap_partition_path"
 mount "$root_partition_path" /mnt # For Root
 mkdir /mnt/home
 mount "$home_partition_path" /mnt/home # For Home
+mkdir -p /mnt/boot/efi # For GRUB UEFI
+mount "$efi_partition_path" /mnt/boot/efi/
 
 # Install Arch Linux base system
 echo "##########################################"
@@ -108,8 +110,7 @@ echo "##################################################"
 echo "##        Installing GRUB bootloader            ##"
 echo "##################################################"
 
-mkdir -p /mnt/boot/efi # For GRUB UEFI
-mount "$efi_partition_path" /mnt/boot/efi/
+
 arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools os-prober
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
