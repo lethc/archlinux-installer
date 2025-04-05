@@ -4,7 +4,7 @@
 hostname="archlinux"
 user="user"
 drive="nvme0n1"  # Change this to your drive (e.g., sda/nvme0n1)
-grub="1GiB"
+grub="500MiB"
 swap_size="6GiB"    # Swap partition size
 root_size="86GiB"   # Root partition size
 home_size="100%"  # Home partition size (remaining space)
@@ -60,7 +60,6 @@ sgdisk -n 4:0:0 -t 4:8300 "$disk_path"
 # Inform the kernel of the partition changes
 partprobe "$disk_path"
 
-
 # Format the partitions
 mkfs.fat -F32 "$efi_partition_path"
 mkswap "$swap_partition_path"
@@ -80,7 +79,7 @@ mount "$efi_partition_path" /mnt/boot/efi/
 echo "##########################################"
 echo "##  Installing Arch Linux base system   ##"
 echo "##########################################"
-pacstrap /mnt base base-devel dkms linux-lts linux-lts-headers linux-firmware amd-ucode nano vim git sudo networkmanager dhcpcd bluez wpa_supplicant 
+pacstrap /mnt base base-devel dkms linux-lts linux-lts-headers linux-firmware amd-ucode nano vim git sudo networkmanager dhcpcd bluez bluez-utils wpa_supplicant 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -129,7 +128,6 @@ echo "##################################################"
 echo "##        Installing GRUB bootloader            ##"
 echo "##################################################"
 
-
 arch-chroot /mnt pacman -S grub efibootmgr dosfstools mtools os-prober ntfs-3g
 arch-chroot /mnt grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
@@ -138,22 +136,24 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 echo "######################################################"
 echo "## Installing display server, DE and audio services ##"
 echo "######################################################"
-arch-chroot /mnt pacman -S xorg-server xorg-xinit xterm pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm plasma plasma-desktop
+arch-chroot /mnt pacman -S hyprland cpio meson cmake hyprland-qtutils xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-kde hyprlock hypridle hyprpicker pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm breeze
+# plasma plasma-desktop xorg-server xorg-xinit xterm discover konsole sassc
 
 # Install desktop environment
 echo "######################################"
 echo "##   Installing other applications  ##"
 echo "######################################"
 
-arch-chroot /mnt pacman -S zsh dolphin tesseract-data-eng tesseract-data-spa tesseract git neovim konsole qutebrowser discover man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum kvantum-qt5 cronie nautilus telegram-desktop qt5ct qt6ct zathura zathura-pdf-mupdf firefox gnome-sound-recorder gnome-clocks pavucontrol qalculate-gtk imv fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-mozc fcitx5-hangul fcitx5-chinese-addons gnome-keyring snapshot loupe brightnessctl gnome-bluetooth-3.0 sassc wl-clipboard neofetch totem evince evince-lib-docs ffmpegthumbs kdegraphics-thumbnailers kimageformats kimageformats5
-arch-chroot /mnt pacman -S noto-fonts-cjk ttf-joypixels noto-fonts ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd
+arch-chroot /mnt pacman -S zsh dolphin tesseract-data-eng tesseract-data-spa tesseract git neovim qutebrowser man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum kvantum-qt5 cronie nautilus telegram-desktop zathura zathura-pdf-mupdf firefox gnome-sound-recorder gnome-clocks pavucontrol qalculate-gtk imv fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-mozc fcitx5-hangul fcitx5-chinese-addons gnome-keyring snapshot loupe brightnessctl gnome-bluetooth-3.0 wl-clipboard neofetch totem evince evince-lib-docs ffmpegthumbs kdegraphics-thumbnailers kimageformats kimageformats5
+arch-chroot /mnt pacman -S noto-fonts-cjk  noto-fonts ttf-jetbrains-mono-nerd
 
 # Enable essential services (you can customize this according to your needs)
 echo "###############################"
 echo "#####   Enable Services   #####"
 echo "###############################"
 
-arch-chroot /mnt systemctl enable NetworkManager.service sddm.service cronie.service
+arch-chroot /mnt systemctl enable NetworkManager.service sddm.service cronie.service bluetooth.service
+
 # Finish and unmount
 echo "###############################"
 echo "######   unmount disk    ######"
