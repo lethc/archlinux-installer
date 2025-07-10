@@ -136,7 +136,8 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 echo "######################################################"
 echo "## Installing display server, DE and audio services ##"
 echo "######################################################"
-arch-chroot /mnt pacman -S hyprland cpio meson cmake hyprland-qtutils xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-kde hyprlock hypridle hyprpicker pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm breeze kitty
+arch-chroot /mnt pacman -S hyprland cpio meson cmake hyprland-qtutils xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-kde hyprlock hypridle hyprpicker pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm breeze kitty foot foot-terminfo
+
 # plasma plasma-desktop xorg-server xorg-xinit xterm discover konsole sassc
 
 # Install desktop environment
