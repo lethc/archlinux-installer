@@ -154,7 +154,10 @@ echo "###############################"
 
 sleep 2
 
-arch-chroot /mnt systemctl enable NetworkManager.service sddm.service cronie.service bluetooth.service
+arch-chroot /mnt systemctl enable NetworkManager.service
+arch-chroot /mnt systemctl enable sddm.service
+arch-chroot /mnt systemctl enable cronie.service
+arch-chroot /mnt systemctl enable bluetooth.service
 
 sleep 2
 
