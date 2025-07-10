@@ -152,6 +152,8 @@ echo "###############################"
 echo "#####   Enable Services   #####"
 echo "###############################"
 
+sleep 2
+
 arch-chroot /mnt systemctl enable NetworkManager.service sddm.service cronie.service bluetooth.service
 
 # Finish and unmount
