@@ -167,6 +167,10 @@ arch-chroot /mnt xdg-user-dirs-update
 
 sleep 2
 
+arch-chroot /mnt git clone https://github.com/lethc/hyprland-dotfiles.git ~/.config/hype
+
+sleep 2
+
 # Finish and unmount
 echo "###############################"
 echo "######   unmount disk    ######"
