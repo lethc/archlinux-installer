@@ -156,6 +156,17 @@ sleep 2
 
 arch-chroot /mnt systemctl enable NetworkManager.service sddm.service cronie.service bluetooth.service
 
+sleep 2
+
+echo "#######################################"
+echo "#####   Creating User Directories #####"
+echo "#######################################"
+
+arch-chroot /mnt pacman -S xdg-user-dirs
+arch-chroot /mnt xdg-user-dirs-update
+
+sleep 2
+
 # Finish and unmount
 echo "###############################"
 echo "######   unmount disk    ######"
