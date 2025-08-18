@@ -79,7 +79,7 @@ mount "$efi_partition_path" /mnt/boot/efi/
 echo "##########################################"
 echo "##  Installing Arch Linux base system   ##"
 echo "##########################################"
-pacstrap /mnt base base-devel dkms linux-lts linux-lts-headers linux-firmware amd-ucode nano vim git sudo networkmanager dhcpcd bluez bluez-utils wpa_supplicant 
+pacstrap /mnt base base-devel dkms linux linux-headers linux-firmware amd-ucode nano vim git sudo networkmanager dhcpcd bluez bluez-utils wpa_supplicant 
 # Generate fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
