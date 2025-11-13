@@ -136,7 +136,7 @@ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 echo "######################################################"
 echo "## Installing display server, DE and audio services ##"
 echo "######################################################"
-arch-chroot /mnt pacman -S hyprland cpio meson cmake hyprland-qtutils xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-kde hyprlock hypridle hyprpicker pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm breeze kitty foot foot-terminfo
+arch-chroot /mnt pacman -S hyprland cpio meson cmake xdg-desktop-portal-hyprland xdg-desktop-portal-gtk xdg-desktop-portal-kde hyprlock hypridle hyprpicker pipewire-alsa pipewire-jack pipewire-pulse alsa-utils gvfs-mtp sddm breeze kitty foot foot-terminfo
 
 # plasma plasma-desktop xorg-server xorg-xinit xterm discover konsole sassc
 
@@ -145,7 +145,7 @@ echo "######################################"
 echo "##   Installing other applications  ##"
 echo "######################################"
 
-arch-chroot /mnt pacman -S zsh dolphin tesseract-data-eng tesseract-data-spa tesseract-data-kor tesseract git neovim qutebrowser man-db mpv yt-dlp zellij newsboat btop gitui packagekit-qt5 flatpak fwupd ark kvantum kvantum-qt5 cronie nautilus telegram-desktop zathura zathura-pdf-mupdf firefox gnome-sound-recorder gnome-clocks pavucontrol qalculate-gtk imv fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-mozc fcitx5-hangul fcitx5-chinese-addons gnome-keyring snapshot loupe brightnessctl gnome-bluetooth-3.0 wl-clipboard totem evince evince-lib-docs ffmpegthumbs kdegraphics-thumbnailers kimageformats kimageformats5
+arch-chroot /mnt pacman -S zsh dolphin tesseract-data-eng tesseract-data-spa tesseract-data-kor tesseract git neovim qutebrowser man-db mpv yt-dlp zellij newsboat btop gitui flatpak fwupd ark kvantum kvantum-qt5 cronie nautilus telegram-desktop zathura zathura-pdf-mupdf firefox gnome-sound-recorder gnome-clocks pavucontrol qalculate-gtk imv fcitx5 fcitx5-configtool fcitx5-gtk fcitx5-qt fcitx5-mozc fcitx5-hangul fcitx5-chinese-addons gnome-keyring snapshot loupe brightnessctl gnome-bluetooth-3.0 wl-clipboard totem evince evince-lib-docs ffmpegthumbs kdegraphics-thumbnailers kimageformats kimageformats5
 arch-chroot /mnt pacman -S noto-fonts-cjk  noto-fonts ttf-jetbrains-mono-nerd
 
 # Enable essential services (you can customize this according to your needs)
