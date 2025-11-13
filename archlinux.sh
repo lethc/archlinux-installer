@@ -171,7 +171,7 @@ arch-chroot /mnt xdg-user-dirs-update
 
 sleep 2
 
-arch-chroot /mnt git clone https://github.com/lethc/hyprland-dotfiles.git ~/.config/hypr
+arch-chroot /mnt git clone https://github.com/lethc/hyprland-dotfiles.git "/home/$user/.config/hypr"
 
 sleep 2
 
