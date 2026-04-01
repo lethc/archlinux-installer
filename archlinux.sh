@@ -170,8 +170,9 @@ arch-chroot /mnt pacman -S xdg-user-dirs
 arch-chroot /mnt sudo -u "$user" xdg-user-dirs-update
 
 sleep 2
+ 
+arch-chroot /mnt sudo -u "$user" git clone https://github.com/lethc/hyprland-dotfiles.git "/home/$user/.config/hypr"
 
-arch-chroot /mnt git clone https://github.com/lethc/hyprland-dotfiles.git "/home/$user/.config/hypr"
 
 sleep 2
 
