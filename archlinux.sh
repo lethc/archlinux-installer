@@ -167,7 +167,7 @@ echo "#####   Creating User Directories #####"
 echo "#######################################"
 
 arch-chroot /mnt pacman -S xdg-user-dirs
-arch-chroot /mnt xdg-user-dirs-update
+arch-chroot /mnt sudo -u "$user" xdg-user-dirs-update
 
 sleep 2
 
