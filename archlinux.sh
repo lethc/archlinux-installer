@@ -6,8 +6,7 @@ user="user"
 drive="nvme0n1"  # Change this to your drive (e.g., sda/nvme0n1)
 grub="500MiB"
 swap_size="6GiB"    # Swap partition size
-root_size="86GiB"   # Root partition size
-home_size="100%"  # Home partition size (remaining space)
+root_size="100%"    # Root partition size (all remaining space after EFI and swap)
 
 #Update System clock
 timedatectl set-timezone America/Lima
@@ -26,21 +25,12 @@ if [[ "$drive" == nvme* ]]; then
   efi_partition_path="/dev/${drive}p1"
   swap_partition_path="/dev/${drive}p2"
   root_partition_path="/dev/${drive}p3"
-  home_partition_path="/dev/${drive}p4"
 else
   disk_path="/dev/$drive"
   efi_partition_path="/dev/${drive}1"
   swap_partition_path="/dev/${drive}2"
   root_partition_path="/dev/${drive}3"
-  home_partition_path="/dev/${drive}4"
 fi
-
-# parted "$disk_path" mklabel gpt
-# parted "$disk_path" mkpart primary fat32 1MiB "$grub"  # For GRUB UEFI
-# parted "$disk_path" mkpart primary linux-swap "$grub" "$swap_size" # For Swap
-# parted "$disk_path" mkpart primary ext4 "$swap_size" "$root_size" # For Root
-# parted "$disk_path" mkpart primary ext4 "$root_size" "$home_size" # For Home
-# parted "$dish_path" set 1 esp on
 
 # Create a GPT partition table
 sgdisk -o "$disk_path"
@@ -51,11 +41,8 @@ sgdisk -n 1:1MiB:+${grub} -t 1:EF00 "$disk_path"
 # Create swap partition
 sgdisk -n 2:0:+${swap_size} -t 2:8200 "$disk_path"
 
-# Create root partition
-sgdisk -n 3:0:+${root_size} -t 3:8300 "$disk_path"
-
-# Create home partition (remaining space)
-sgdisk -n 4:0:0 -t 4:8300 "$disk_path"
+# Create root partition (remaining space - single partition for everything)
+sgdisk -n 3:0:0 -t 3:8300 "$disk_path"
 
 # Inform the kernel of the partition changes
 partprobe "$disk_path"
@@ -64,14 +51,10 @@ partprobe "$disk_path"
 mkfs.fat -F32 "$efi_partition_path"
 mkswap "$swap_partition_path"
 mkfs.ext4 "$root_partition_path"
-mkfs.ext4 "$home_partition_path"
 
 # Mount the partitions
-
 swapon "$swap_partition_path"
 mount "$root_partition_path" /mnt # For Root
-mkdir /mnt/home
-mount "$home_partition_path" /mnt/home # For Home
 mkdir -p /mnt/boot/efi # For GRUB UEFI
 mount "$efi_partition_path" /mnt/boot/efi/
 
